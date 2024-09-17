@@ -1,0 +1,318 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Início";
+}
+
+<!-- Modal para Adicionar Nota -->
+<div class="modal fade" id="modalAdicionarNota" tabindex="-1" aria-labelledby="modalAdicionarNotaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAdicionarNotaLabel">Adicionar Nota Fiscal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formAdicionarNota">
+                    <div class="mb-3">
+                        <label for="nomePagador" class="form-label">Nome do Pagador</label>
+                        <input type="text" class="form-control" id="nomePagador" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="numeroNota" class="form-label">Número da Nota</label>
+                        <input type="text" class="form-control" id="numeroNota" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dataEmissao" class="form-label">Data de Emissão</label>
+                        <input type="date" class="form-control" id="dataEmissao" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="valor" class="form-label">Valor</label>
+                        <input type="number" class="form-control" id="valor" step="0.01" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="documentoNota" class="form-label">Documento da Nota (opcional)</label>
+                        <input type="url" class="form-control" id="documentoNota">
+                    </div>
+                    <div class="mb-3">
+                        <label for="documentoBoleto" class="form-label">Documento do Boleto (opcional)</label>
+                        <input type="url" class="form-control" id="documentoBoleto">
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" id="status" required>
+                            <option value="0">Emitida</option>
+                            <option value="1">Cobrança Realizada</option>
+                            <option value="2">Pagamento em Atraso</option>
+                            <option value="3">Pagamento Realizado</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: end">
+                        <button type="submit" class="btn btn-primary">Adicionar Nota</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mb-4">
+    <div class="row">
+        <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+            <div class="position-sticky sidebar-sticky">
+                <div class="logo-wrap bg-dark text-center">
+                    <b style="color: #fff;">TechNationTestApp</b>
+                </div>
+                <ul class="nav flex-column mt-4">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home align-text-bottom" aria-hidden="true">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            Dashboard
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <nav class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-md-3 bg-white shadow-sm">
+            <div class="row">
+                <button class="btn btn-link" id="sidebar-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                    </svg>
+                </button>
+                <div class="col-md-4 ps-md-0 ps-4">
+                    <form role="search" onsubmit="return false;">
+                        <div class="search-group">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                            <input type="search" class="form-control" placeholder="Procurar..." aria-label="Search" />
+                        </div>
+                    </form>
+                   
+                </div>
+             
+                <div class="col-md-8">
+
+                    <div class="dropdown text-end dropdown-usrn">
+                        <a href="#" class="link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://via.placeholder.com/32/454752/ffffff?text=PH" alt="mdo" width="32" height="32" class="rounded-circle" />
+                            usuário
+                        </a>
+                        <ul class="dropdown-menu text-small">
+                            <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                            <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                            <li><a class="dropdown-item" href="#">Sair</a></li>
+                        </ul>
+                    </div>
+                    
+                </div>
+            
+            </div>
+          
+        </nav>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="dashboard-header">
+                <h1>Dashboard</h1>
+                <button id="btnAdicionarNota" class="btn btn-primary">+ Nota</button>
+            </div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 row-stats mb-4 mb-2-sm">
+                <div class="col">
+                    <a href="#" class="h-primary-outline mb-2-sm">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-activity" viewBox="0 0 15 15">
+                                            <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h3 class="h5" id="valorTotalEmitido">0,00</h3>
+                                        <p class="m-0 text-muted">
+                                            Total Emitido
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#" class="h-primary-outline mb-2-sm">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-activity" viewBox="0 0 15 15">
+                                            <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h3 class="h5" id="valorTotalNaoCobrado">0,00</h3>
+                                        <p class="m-0 text-muted">
+                                            Não cobrado
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#" class="h-primary-outline mb-2-sm">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-activity" viewBox="0 0 15 15">
+                                            <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h3 class="h5" id="valorTotalInadimplencia">0,00</h3>
+                                        <p class="m-0 text-muted">
+                                            Total inadimplência
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#" class="h-primary-outline mb-2-sm">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-activity" viewBox="0 0 15 15">
+                                            <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h3 class="h5" id="valorTotalAVencer">0,00</h3>
+                                        <p class="m-0 text-muted">
+                                            Total a vencer
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#" class="h-primary-outline mb-2-sm">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-activity" viewBox="0 0 15 15">
+                                            <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h3 class="h5" id="valorTotalPago">0,00</h3>
+                                        <p class="m-0 text-muted">
+                                            Total pago
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row mb-4 mt-2">
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <select id="filtroPeriodo" class="form-select">
+                                <option value="mes">Mês</option>
+                                <option value="trimestre">Trimestre</option>
+                                <option value="ano">Ano</option>
+                            </select>
+                            <div class="row mb-4 mt-2">
+                                <div class="col">
+                                    <canvas id="inadimplenciaChart"></canvas>
+                                </div>
+                                <div class="col">
+                                    <canvas id="receitaChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-3">
+                            <h2 class="my-0 h3 mb-3">Notas Fiscais</h2>
+                            <div class="row">
+                                <div class="mb-3 col">
+                                    <label for="filtroMesEmissao" class="form-label">Filtrar por Mês de Emissão</label>
+                                    <select id="filtroMesEmissao" class="form-select">
+                                        <option value="">Selecione o Mês</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 col">
+                                    <label for="filtroMesCobranca" class="form-label">Filtrar por Mês de Cobrança</label>
+                                    <select id="filtroMesCobranca" class="form-select">
+                                        <option value="">Selecione o Mês</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 col">
+                                    <label for="filtroMesPagamento" class="form-label">Filtrar por Mês de Pagamento</label>
+                                    <select id="filtroMesPagamento" class="form-select">
+                                        <option value="">Selecione o Mês</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 col">
+                                    <label for="filtroStatus" class="form-label">Filtrar por Status</label>
+                                    <select id="filtroStatus" class="form-select">
+                                        <option value="">Todos</option>
+                                        <option value="0">Emitida</option>
+                                        <option value="1">Cobrança realizada</option>
+                                        <option value="2">Pagamento em atraso</option>
+                                        <option value="3">Pagamento realizado</option>
+                                    </select>
+                                </div>
+                                <div class="col mb-3">
+                                    <label for="filtroMesCobranca" class="form-label">&nbsp;</label>
+                                    <button id="btnBuscarNotas" class="btn btn-primary form-control">Filtrar</button>
+                                </div>
+                            </div>
+                            <div class="table-responsive mt-4 mb-1">
+                                <table id="tabelaNotas" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nome do Pagador</th>
+                                            <th>Número da Nota</th>
+                                            <th>Data de Emissão</th>
+                                            <th>Data de Cobrança</th>
+                                            <th>Data de Pagamento</th>
+                                            <th>Valor</th>
+                                            <th>Documento Nota</th>
+                                            <th>Documento Boleto</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

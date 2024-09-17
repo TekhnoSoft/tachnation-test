@@ -1,0 +1,131 @@
+body {
+    background: #f7f7f7;
+}
+
+a.h-primary-outline:hover > .card {
+    border-color: #6246ea;
+}
+
+.card {
+    border-color: rgba(43, 44, 52, 0.15);
+}
+
+.dropdown-usrn {
+    margin-top: 0.25rem;
+}
+
+.logo {
+    width: 100%;
+    max-width: 240px;
+}
+
+#sidebar-toggle {
+    display: none;
+}
+
+#sidebar {
+    background: #fffffe;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 20px 0 0;
+}
+
+    #sidebar svg {
+        max-width: 22px;
+        margin-right: 2px;
+        stroke: #8c8e9f;
+    }
+
+    #sidebar ul li a {
+        color: #ffffff;
+        border-left: 3px solid transparent;
+        padding-top: 0.7rem;
+        padding-bottom: 0.7rem;
+    }
+
+        #sidebar ul li a.active {
+            border-left: 3px solid #e45858;
+        }
+
+table tbody tr td {
+    vertical-align: middle;
+}
+
+.row-stats a {
+    color: initial;
+    text-decoration: none;
+}
+
+    .row-stats a svg {
+        fill: #6246ea;
+    }
+
+.search-group {
+    position: relative;
+}
+
+    .search-group svg {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+
+    .search-group input {
+        padding-left: 40px;
+    }
+
+@media (max-width: 767.98px) {
+    .dropdown-usrn {
+        display: none;
+    }
+
+    .search-group {
+        margin: 15px 0;
+    }
+
+    .row-stats a {
+        display: block;
+    }
+
+    .mb-2-sm {
+        margin-bottom: 20px !important;
+    }
+
+    #sidebar-toggle {
+        background: #6246ea;
+        display: inline-block;
+        position: absolute;
+        left: 6px;
+        z-index: 99999;
+        top: 15px;
+        color: #fff;
+        width: auto;
+    }
+
+    .search-group {
+        margin-left: 40px;
+    }
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+#btnAdicionarNota {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    #btnAdicionarNota:hover {
+        background-color: #0056b3;
+    }
